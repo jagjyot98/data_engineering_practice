@@ -64,7 +64,7 @@ data-engineering-practice/
 | Day | Topic | Concepts Covered | Score |
 |-----|-------|-----------------|-------|
 | [Day 1](daily-exercises/day1_exercises.py) | Python Basics | Data structures, functions, list comprehensions, file I/O (CSV/JSON), error handling, f-strings | 7.5/10 |
-| Day 2 | Pandas Basics | *(upcoming)* | — |
+| [Day 2](daily-exercises/day2_exercises.py) | Pandas — Loading, Inspecting & Cleaning | DataFrame creation, inspection methods, pd.to_numeric, pd.to_datetime, fillna, drop_duplicates, apply, to_csv | 8/10 |
 | Day 3 | Pandas — Filtering & Aggregations | *(upcoming)* | — |
 | Day 4 | File Formats | *(upcoming)* | — |
 | Day 5 | SQLAlchemy | *(upcoming)* | — |
@@ -93,6 +93,30 @@ data-engineering-practice/
 - Catch specific exceptions, not broad `Exception`
 
 📄 [Full notes](daily-notes/day1_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day1_exercises.py)
+
+---
+
+### Day 2 — Pandas: Loading, Inspecting & Cleaning Data
+**Date:** 2026-06-07
+
+**Topics covered:**
+- **Loading data** — `pd.DataFrame()` from list of dicts, dict of lists, CSV, JSON
+- **Inspecting data** — `.shape`, `.dtypes`, `.columns`, `.head()`, `.info()`, `.isnull().sum()`
+- **Cleaning data** — `.str.strip()`, `.str.lower()`, `pd.to_numeric(errors="coerce")`, `pd.to_datetime(errors="coerce")`, `.fillna()`, `.drop_duplicates()`
+- **Nullable integers** — `Int64` (capital I) vs `int64` — only `Int64` can hold `NaN`
+- **Adding columns** — `.apply()` with custom functions, datetime extraction with `.dt.year`
+- **Saving data** — `to_csv(index=False)` — always use `index=False`
+
+**Key rules learned:**
+- `pd.to_numeric(errors="coerce")` — bad values silently become `NaN`, pipeline doesn't crash
+- Always use `Int64` (capital I) after `pd.to_numeric` — regular `int` cannot hold `NaN`
+- Use `fillna(median())` not `fillna(mean())` for salary/age — outliers skew the mean
+- Duplicates rarely share the same ID — drop on business keys (name + dept + date), not primary key
+- `to_csv(index=False)` always — without it, row numbers appear as a junk extra column
+- `downcast` parameter removed in pandas 3.x — use `.astype("Int64")` instead
+- Always check `pd.isnull()` before operating on date values inside `.apply()`
+
+📄 [Full notes](daily-notes/day2_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day2_exercises.py)
 
 ---
 

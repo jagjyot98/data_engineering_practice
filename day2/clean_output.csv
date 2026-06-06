@@ -1,0 +1,7 @@
+employee_id,name,department,salary,join_date,manager,band,years_at_company
+1,alice smith,Engineering,95000.0,2021-03-15,Bob,high,5
+2,bob jones,Marketing,72000.0,2020-07-01,,mid,6
+3,charlie,Engineering,72000.0,2022-01-10,Alice,mid,4
+4,diana prince,HR,68000.0,2019-11-20,,mid,7
+5,bob jones,Marketing,72000.0,2020-07-01,,mid,6
+6,eve adams,Engineering,105000.0,2018-05-30,Alice,high,8
