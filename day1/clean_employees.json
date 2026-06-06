@@ -1,0 +1,17 @@
+[
+  {
+    "name": "john smith",
+    "department": "Engineering",
+    "salary": 85000
+  },
+  {
+    "name": "jane doe",
+    "department": "Marketing",
+    "salary": 72000
+  },
+  {
+    "name": "bob lee",
+    "department": "Engineering",
+    "salary": null
+  }
+]
