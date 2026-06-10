@@ -65,6 +65,7 @@ data-engineering-practice/
 |-----|-------|-----------------|-------|
 | [Day 1](daily-exercises/day1_exercises.py) | Python Basics | Data structures, functions, list comprehensions, file I/O (CSV/JSON), error handling, f-strings | 7.5/10 |
 | [Day 2](daily-exercises/day2_exercises.py) | Pandas — Loading, Inspecting & Cleaning | DataFrame creation, inspection methods, pd.to_numeric, pd.to_datetime, fillna, drop_duplicates, apply, to_csv | 8/10 |
+| [Day 3](daily-exercises/day3_exercises.py) | Pandas — Filtering, Grouping & Aggregations | Row filtering, .isin(), multi-condition filters, sort_values, groupby, named .agg(), .transform(), .filter() groups, pivot_table | 9/10 |
 | Day 3 | Pandas — Filtering & Aggregations | *(upcoming)* | — |
 | Day 4 | File Formats | *(upcoming)* | — |
 | Day 5 | SQLAlchemy | *(upcoming)* | — |
@@ -117,6 +118,31 @@ data-engineering-practice/
 - Always check `pd.isnull()` before operating on date values inside `.apply()`
 
 📄 [Full notes](daily-notes/day2_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day2_exercises.py)
+
+---
+
+### Day 3 — Pandas: Filtering, Grouping & Aggregations
+**Date:** 2026-06-08
+
+**Topics covered:**
+- **Filtering** — single/multi-condition filters, `&` / `|` operators, `.isin()`, `~` (NOT), `.notna()`
+- **Sorting** — `sort_values()` single and multi-column with mixed ascending order
+- **GroupBy & Aggregations** — named `.agg()`, multiple metrics in one call, `.reset_index()`
+- **Aggregation functions** — `mean`, `sum`, `min`, `max`, `count`, `nunique`, `median`, `std`
+- **Transform** — `.transform("mean")` broadcasts group value back to every row (SQL window function equivalent)
+- **Group filtering** — `.filter(lambda g: ...)` keeps or drops entire groups
+- **Pivot tables** — `pivot_table()` with multiple values and functions
+
+**Key rules learned:**
+- Multi-conditions **must** use parentheses: `(cond1) & (cond2)` — without them, operator precedence breaks silently
+- `.isin([...])` = SQL `IN (...)` — always prefer over chaining `|` conditions
+- Named `.agg()` is the professional standard — explicit, readable, one call
+- Always `.reset_index()` after groupby to flatten back to a clean DataFrame
+- `.transform("mean")` ≠ `.mean()` — transform returns same shape as input; mean collapses to one row per group
+- `.transform()` = SQL window function: `AVG(salary) OVER (PARTITION BY department)`
+- `.filter(lambda g: ...)` drops **entire groups**, not individual rows
+
+📄 [Full notes](daily-notes/day3_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day3_exercises.py)
 
 ---
 
