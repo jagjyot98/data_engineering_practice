@@ -1,0 +1,32 @@
+[
+  {
+    "name":"  Alice Smith",
+    "department":"Engineering",
+    "salary":95000.0
+  },
+  {
+    "name":"BOB JONES",
+    "department":"Marketing",
+    "salary":72000.0
+  },
+  {
+    "name":"charlie  ",
+    "department":"Engineering",
+    "salary":null
+  },
+  {
+    "name":"Diana Prince",
+    "department":"HR",
+    "salary":68000.0
+  },
+  {
+    "name":"BOB JONES",
+    "department":"Marketing",
+    "salary":72000.0
+  },
+  {
+    "name":"Eve Adams",
+    "department":"Engineering",
+    "salary":105000.0
+  }
+]

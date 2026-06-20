@@ -66,8 +66,7 @@ data-engineering-practice/
 | [Day 1](daily-exercises/day1_exercises.py) | Python Basics | Data structures, functions, list comprehensions, file I/O (CSV/JSON), error handling, f-strings | 7.5/10 |
 | [Day 2](daily-exercises/day2_exercises.py) | Pandas — Loading, Inspecting & Cleaning | DataFrame creation, inspection methods, pd.to_numeric, pd.to_datetime, fillna, drop_duplicates, apply, to_csv | 8/10 |
 | [Day 3](daily-exercises/day3_exercises.py) | Pandas — Filtering, Grouping & Aggregations | Row filtering, .isin(), multi-condition filters, sort_values, groupby, named .agg(), .transform(), .filter() groups, pivot_table | 9/10 |
-| Day 3 | Pandas — Filtering & Aggregations | *(upcoming)* | — |
-| Day 4 | File Formats | *(upcoming)* | — |
+| [Day 4](daily-exercises/day4_exercises.py) | File Formats — CSV, JSON & Parquet | read_csv options, usecols, parse_dates, to_json orient, pd.read_json, to_parquet, columnar storage, glob, pd.concat | 7.5/10 |
 | Day 5 | SQLAlchemy | *(upcoming)* | — |
 | Day 6 | psycopg2 | *(upcoming)* | — |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
@@ -143,6 +142,32 @@ data-engineering-practice/
 - `.filter(lambda g: ...)` drops **entire groups**, not individual rows
 
 📄 [Full notes](daily-notes/day3_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day3_exercises.py)
+
+---
+
+### Day 4 — File Formats: CSV, JSON & Parquet
+**Date:** 2026-06-09
+
+**Topics covered:**
+- **CSV** — `read_csv` options: `usecols`, `dtype`, `na_values`, `parse_dates`, `sep`; `to_csv(index=False)`
+- **JSON** — `to_json(orient="records")`, `pd.read_json()`, reading nested API responses with `json.load()`
+- **Parquet** — `to_parquet(compression="snappy")`, `read_parquet(columns=[])`, columnar storage concept
+- **Format comparison** — file sizes, read speeds, type preservation across CSV / JSON / Parquet
+- **Multiple files** — `glob.glob()` pattern matching, `pd.concat(..., ignore_index=True)`
+- **Variable naming** — `df_full` vs `df_slim` pattern to avoid overwriting source data
+
+**Key rules learned:**
+- `to_csv(index=False)` always — without it, a junk row number column is written
+- `parse_dates` column must also be in `usecols` — can't parse a column you didn't load
+- Never overwrite source df — use separate names (`df_full`, `df_slim`) when reading subsets
+- `pd.read_json()` preferred over `json.load()` + `pd.DataFrame()` — stay in pandas
+- `orient="records"` for JSON — standard list-of-dicts format used in APIs
+- Parquet is the standard format for data pipelines — preserves types, columnar, compressed
+- `columns=[]` on `read_parquet()` — load only what you need; this is the columnar advantage
+- Glob patterns need a path prefix — `"day4/*.csv"` not `"*.csv"`
+- `pd.concat(..., ignore_index=True)` — always reset index when combining files
+
+📄 [Full notes](daily-notes/day4_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day4_exercises.py)
 
 ---
 
