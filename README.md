@@ -67,7 +67,8 @@ data-engineering-practice/
 | [Day 2](daily-exercises/day2_exercises.py) | Pandas — Loading, Inspecting & Cleaning | DataFrame creation, inspection methods, pd.to_numeric, pd.to_datetime, fillna, drop_duplicates, apply, to_csv | 8/10 |
 | [Day 3](daily-exercises/day3_exercises.py) | Pandas — Filtering, Grouping & Aggregations | Row filtering, .isin(), multi-condition filters, sort_values, groupby, named .agg(), .transform(), .filter() groups, pivot_table | 9/10 |
 | [Day 4](daily-exercises/day4_exercises.py) | File Formats — CSV, JSON & Parquet | read_csv options, usecols, parse_dates, to_json orient, pd.read_json, to_parquet, columnar storage, glob, pd.concat | 7.5/10 |
-| Day 5 | SQLAlchemy | *(upcoming)* | — |
+| [Day 5](daily-exercises/day5_exercises.py) | SQLAlchemy — Connecting Python to Databases | create_engine, to_sql, pd.read_sql, text() parameterised queries, ETL pipeline pattern, inspect | 7.5/10 |
+| Day 5b | SQLAlchemy — Deep Dive: Pipelines & Engines | *(upcoming)* | — |
 | Day 6 | psycopg2 | *(upcoming)* | — |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
 
@@ -168,6 +169,31 @@ data-engineering-practice/
 - `pd.concat(..., ignore_index=True)` — always reset index when combining files
 
 📄 [Full notes](daily-notes/day4_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day4_exercises.py)
+
+---
+
+### Day 5 — SQLAlchemy: Connecting Python to Databases
+**Date:** 2026-06-10
+
+**Topics covered:**
+- **Engine creation** — `create_engine()` for SQLite and PostgreSQL; connection string format; lazy connection
+- **Writing to database** — `to_sql()` with `if_exists`, `index=False`; difference between replace/append/fail
+- **Reading from database** — `pd.read_sql()` with full queries, filters, aggregations
+- **Parameterised queries** — `text()` + `:param` syntax; why f-strings in SQL = SQL injection
+- **Raw SQL execution** — DDL and DML with `engine.connect()`, `conn.execute()`, `conn.commit()`
+- **ETL pipeline pattern** — Extract (read CSV) → Transform (clean + enrich in Python) → Load (to_sql)
+- **Database inspection** — `inspect(engine)`, `get_table_names()`, `get_columns()`
+
+**Key rules learned:**
+- `fetchall()` and `keys()` must be **inside** the `with engine.connect()` block — connection closes on exit
+- NEVER use f-strings in SQL — always use `text()` + `:param` for parameterised queries (SQL injection)
+- Functions should **return** DataFrames, not just print them — callers need the data
+- ETL means transform your **extracted data** (`df_raw`) — don't bypass it and re-query the DB
+- `if_exists="replace"` is safe to run repeatedly — it's not a one-time operation
+- SQL type comparisons must match the column type — no quotes around number comparisons
+- Always verify the correct table in `COUNT(*)` after load
+
+📄 [Full notes](daily-notes/day5_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5_exercises.py)
 
 ---
 

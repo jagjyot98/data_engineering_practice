@@ -1,0 +1,11 @@
+employee_id,name,department,salary,experience
+1,Alice,Engineering,95000,5
+2,Bob,Marketing,72000,3
+3,Charlie,Engineering,105000,8
+4,Diana,HR,68000,2
+5,Eve,Engineering,88000,4
+6,Frank,Marketing,76000,5
+7,Grace,HR,71000,4
+8,Henry,Engineering,112000,10
+9,Iris,Marketing,69000,2
+10,Jack,HR,74000,6
