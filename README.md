@@ -68,7 +68,7 @@ data-engineering-practice/
 | [Day 3](daily-exercises/day3_exercises.py) | Pandas — Filtering, Grouping & Aggregations | Row filtering, .isin(), multi-condition filters, sort_values, groupby, named .agg(), .transform(), .filter() groups, pivot_table | 9/10 |
 | [Day 4](daily-exercises/day4_exercises.py) | File Formats — CSV, JSON & Parquet | read_csv options, usecols, parse_dates, to_json orient, pd.read_json, to_parquet, columnar storage, glob, pd.concat | 7.5/10 |
 | [Day 5](daily-exercises/day5_exercises.py) | SQLAlchemy — Connecting Python to Databases | create_engine, to_sql, pd.read_sql, text() parameterised queries, ETL pipeline pattern, inspect | 7.5/10 |
-| Day 5b | SQLAlchemy — Deep Dive: Pipelines & Engines | *(upcoming)* | — |
+| [Day 5b](daily-exercises/day5b_exercises.py) | SQLAlchemy — Deep Dive: Pipelines & Engines | Multi-source pipeline, validate(), quarantine pattern, inner vs left join in transform, pd.concat for rejections, engine.begin() | 9/10 |
 | Day 6 | psycopg2 | *(upcoming)* | — |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
 
@@ -194,6 +194,32 @@ data-engineering-practice/
 - Always verify the correct table in `COUNT(*)` after load
 
 📄 [Full notes](daily-notes/day5_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5_exercises.py)
+
+---
+
+### Day 5b — SQLAlchemy Deep Dive: Pipelines & Engines
+**Date:** 2026-06-11
+
+**Topics covered:**
+- **Engine & connection pooling** — `pool_size`, `max_overflow`, `pool_pre_ping`; why pooling matters in pipelines
+- **engine.begin() vs engine.connect()** — auto-commit/rollback vs manual commit; when to use each
+- **validate()** — row-level null checks with `.notna().all(axis=1)`; separating null checks from numeric range checks
+- **Quarantine pattern** — `pd.concat()` to combine all invalid rows; never silently drop bad data
+- **Transform with inner join** — why `how="inner"` is correct; how `how="left"` leaks invalid records via NaN imputation
+- **Incremental load** — `if_exists="append"` vs `"replace"`; upsert pattern to avoid duplicates
+- **Structured ETL** — full Extract → Validate → Quarantine → Transform → Load pipeline with summary
+
+**Key rules learned:**
+- `df[list].notna().all(axis=1)` — correct row-level boolean mask across multiple columns
+- Never apply `> 0` to string columns — use separate `numeric_cols` parameter for range checks
+- Always `.copy()` inputs in `transform()` — never mutate DataFrames passed as arguments
+- `how="inner"` in transform merge — only records valid in **both** sources pass through
+- `how="left"` leaks rejected records via NaN imputation — always use inner join in transform
+- `pd.concat()` to combine invalid rows from multiple sources — never merge them
+- Never silently drop bad rows — always load to a quarantine/rejected table
+- `engine.begin()` for DML — auto-commits on success, auto-rolls back on exception
+
+📄 [Full notes](daily-notes/day5b_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5b_exercises.py)
 
 ---
 
