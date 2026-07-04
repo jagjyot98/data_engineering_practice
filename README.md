@@ -69,6 +69,7 @@ data-engineering-practice/
 | [Day 4](daily-exercises/day4_exercises.py) | File Formats — CSV, JSON & Parquet | read_csv options, usecols, parse_dates, to_json orient, pd.read_json, to_parquet, columnar storage, glob, pd.concat | 7.5/10 |
 | [Day 5](daily-exercises/day5_exercises.py) | SQLAlchemy — Connecting Python to Databases | create_engine, to_sql, pd.read_sql, text() parameterised queries, ETL pipeline pattern, inspect | 7.5/10 |
 | [Day 5b](daily-exercises/day5b_exercises.py) | SQLAlchemy — Deep Dive: Pipelines & Engines | Multi-source pipeline, validate(), quarantine pattern, inner vs left join in transform, pd.concat for rejections, engine.begin() | 9/10 |
+| [Day 5c](daily-exercises/day5c_exercises.py) | SQLAlchemy — Pipeline Deep Practice (3 Pipelines) | Vectorised ops vs .apply(), dt.strftime, engine as param, left vs inner join for enrichment, incremental load with CREATE TABLE IF NOT EXISTS + isin dedup | A:8.5 B:9 C:8 |
 | Day 6 | psycopg2 | *(upcoming)* | — |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
 
@@ -220,6 +221,34 @@ data-engineering-practice/
 - `engine.begin()` for DML — auto-commits on success, auto-rolls back on exception
 
 📄 [Full notes](daily-notes/day5b_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5b_exercises.py)
+
+---
+
+### Day 5c — SQLAlchemy: Pipeline Deep Practice
+**Date:** 2026-07-05
+
+**Three progressively harder pipelines:**
+- **Pipeline A** — Single-source sales pipeline with validate / transform / load and a post-load aggregate query
+- **Pipeline B** — Multi-source orders + customer lookup; matched and unmatched orders split into separate tables
+- **Pipeline C** — Incremental load: only new rows inserted per run; existing rows skipped by primary key check
+
+**Topics covered:**
+- **Vectorised operations** — `col1 * col2` always preferred over `.apply(axis=1)` for arithmetic
+- **Date formatting** — `dt.strftime("%Y-%m")` for "YYYY-MM" strings; `dt.month` returns integers, not strings
+- **Engine as parameter** — always pass `engine` into pipeline functions; never rely on global state
+- **Left vs inner join in transform** — inner join when both sources must be valid; left join + flag when keeping all primary records
+- **Incremental load pattern** — `CREATE TABLE IF NOT EXISTS` + read existing IDs + `~df["id"].isin(ids)` + `if_exists="append"`
+- **Pipeline result dict** — returning a summary dict for monitoring and downstream use
+
+**Key rules learned:**
+- `dt.strftime("%Y-%m")` → "2024-01" string; `dt.month` → integer 1
+- Vectorised column ops are always faster than `.apply(axis=1)` for simple arithmetic
+- `CREATE TABLE IF NOT EXISTS` handles the first-run case — no `try/except` needed
+- `if_exists="append"` for incremental; `if_exists="replace"` wipes all history — never mix them
+- Must run earlier batch first to populate the table before testing the skip/dedup behavior
+- Left join + `customer_found` flag = keep all orders, investigate which lookups failed
+
+📄 [Full notes](daily-notes/day5c_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5c_exercises.py)
 
 ---
 
