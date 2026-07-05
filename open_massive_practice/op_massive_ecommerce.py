@@ -10,8 +10,8 @@ def log(step, message, rows=None):                      #for creating pipeline l
     print(f"[{ts}] [{step}] {message}{row_info}")
 
 def load(df, table_name, engine):                       #for loading provided data into a database table 
-    df.to_sql(table_name, con=engine, if_exists="replace", index=False)
-    log("LOAD", f"Loaded data into table '{table_name}' | Rows loaded: ", len(df))
+    df.to_sql(table_name, con=engine, if_exists="append", index=False)
+    log("REJECTED LOAD", f"Loaded data into table '{table_name}' | Rows loaded: ", len(df))
 
 def extract(filepath):                                  #for extracting outsourced data (CSV File)
     df = pd.read_csv(filepath)
@@ -69,8 +69,6 @@ def validate(df):                                       #for filtering out valid
     mask_valid = (
         df["customer_email"].notna() &
         df["shipping_country"].notna() &
-        df["discount_pct"].notna() &
-        df["coupon_code"].notna() &
         df["unit_price"].notna() & (df["unit_price"] > 0) &
         df["amount_clean"].notna() & (df["amount_clean"] > 0) &
         df["quantity_clean"].notna() & (df["quantity_clean"] > 0)
@@ -95,17 +93,56 @@ def aggregate_ecommerce_by_product_category(engine):                 #generating
         df = pd.DataFrame(result.fetchall(), columns=result.keys())
     log("AGGREGATE", "Aggregated ecommerce data by product_category | Rows aggregated: ", len(df))
     return df
-
+ 
 def run_ecommerce_pipeline(engine):                             #running the entire pipeline for ecommerce data processing  
-    extracted_data = extract("datasets/ecommerce_orders_raw.csv")
-    
-    extracted_data = clean_amounts_and_quantities(extracted_data)
+    extracted_data = extract("datasets/incremental/orders_day2.csv")        #changing data sources for incremental load
 
-    valid_data, invalid_data = validate(extracted_data)
+    # Ensure target table exists
+    with engine.begin() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS ecommerce_clean (
+                order_id INTEGER PRIMARY KEY,
+                customer_name TEXT,
+                customer_email TEXT,
+                order_date DATETIME,
+                product_category TEXT,
+                product_name TEXT,
+                quantity INTEGER,
+                quantity_clean INTEGER,
+                unit_price REAL,
+                amount REAL,
+                amount_clean REAL,
+                discount_pct REAL,
+                coupon_code TEXT,
+                payment_method TEXT,
+                shipping_country TEXT,
+                order_status TEXT        
+            )
+        """))
+    existing_ids = pd.read_sql("SELECT order_id FROM ecommerce_clean", engine)["order_id"].tolist()
+
+    new_rows = extracted_data[~extracted_data["order_id"].isin(existing_ids)]
+    skipped = extracted_data[extracted_data["order_id"].isin(existing_ids)]
+
+    dupes_in_batch = new_rows["order_id"].duplicated().sum()
+    new_rows = new_rows.drop_duplicates(subset="order_id", keep="first")
+    log("DE-DUPLLICATION", "Duplicate order_ids within this extract (kept first): ", dupes_in_batch)
+
+    new_rows["order_date"] = parse_mixed_dates(new_rows["order_date"])
+
+    cleaned_data = clean_amounts_and_quantities(new_rows)
+
+    valid_data, invalid_data = validate(cleaned_data)
 
     transformed_data = transform(valid_data)
 
-    load(transformed_data, "ecommerce_clean", engine)
+    if not transformed_data.empty:
+            transformed_data.to_sql("ecommerce_clean", engine, if_exists="append", index=False)
+
+    log("INCREMENTAL LOAD", "New Rows added: ", len(transformed_data))
+    log("INCREMENTAL LOAD", "Rows skipped (already loaded): ", len(skipped))
+    
+    # load(transformed_data, "ecommerce_clean", engine)
     load(invalid_data, "ecommerce_rejected", engine)
 
     aggregated_data = aggregate_ecommerce_by_product_category(engine)
