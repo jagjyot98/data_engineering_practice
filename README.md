@@ -70,6 +70,7 @@ data-engineering-practice/
 | [Day 5](daily-exercises/day5_exercises.py) | SQLAlchemy — Connecting Python to Databases | create_engine, to_sql, pd.read_sql, text() parameterised queries, ETL pipeline pattern, inspect | 7.5/10 |
 | [Day 5b](daily-exercises/day5b_exercises.py) | SQLAlchemy — Deep Dive: Pipelines & Engines | Multi-source pipeline, validate(), quarantine pattern, inner vs left join in transform, pd.concat for rejections, engine.begin() | 9/10 |
 | [Day 5c](daily-exercises/day5c_exercises.py) | SQLAlchemy — Pipeline Deep Practice (3 Pipelines) | Vectorised ops vs .apply(), dt.strftime, engine as param, left vs inner join for enrichment, incremental load with CREATE TABLE IF NOT EXISTS + isin dedup | A:8.5 B:9 C:8 |
+| [Day 5d](daily-exercises/day5d_exercises.py) | ETL Deep Dive — Chunked Loading, Upsert + Audit, Checkpointing | chunksize iterator, mask-once pattern, INSERT OR REPLACE, audit columns (loaded_at/source_file/run_id), uuid, state table, idempotency, os.path.basename | A:9 B:9 C:9 |
 | Day 6 | psycopg2 | *(upcoming)* | — |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
 
@@ -249,6 +250,37 @@ data-engineering-practice/
 - Left join + `customer_found` flag = keep all orders, investigate which lookups failed
 
 📄 [Full notes](daily-notes/day5c_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5c_exercises.py)
+
+---
+
+### Day 5d — ETL Deep Dive: Chunked Loading, Upsert + Audit, Checkpointing
+**Date:** 2026-07-12
+
+**Three pipelines covering untouched production ETL patterns:**
+- **Pipeline A** — Chunked loading: 200-row CSV processed in chunks of 50; validate each chunk, accumulate counts
+- **Pipeline B** — Upsert + audit columns: `INSERT OR REPLACE` with `loaded_at`, `source_file`, `run_id` auto-attached
+- **Pipeline C** — Checkpointing: `pipeline_state` table tracks processed files; reruns skip already-completed files
+
+**Topics covered:**
+- **Chunked loading** — `pd.read_csv(chunksize=N)` returns an iterator; counters live outside the loop; `if_exists="append"` accumulates across chunks
+- **Mask-once pattern** — compute validation mask once, apply with `mask` and `~mask`; never duplicate the condition
+- **INSERT OR REPLACE** — SQLite upsert syntax; requires table + PRIMARY KEY to exist first; replaces full row on conflict
+- **Audit columns** — `loaded_at`, `source_file`, `run_id` added to every row in Python before the SQL call
+- **uuid.uuid4()** — generate one `run_id` per batch, not per row
+- **Pipeline state table** — checkpoint pattern: check-before / write-after; `file_name` as PRIMARY KEY
+- **Idempotency** — running the pipeline N times produces the same result as running it once
+- **os.path.basename()** — portable filename extraction, handles both `/` and `\`
+
+**Key rules learned:**
+- `if_exists="append"` on every chunk — `"replace"` wipes all prior chunks
+- Counters must be defined outside the loop — inside they reset every iteration
+- `CREATE TABLE IF NOT EXISTS` must come before `INSERT OR REPLACE` — raw SQL won't create the table
+- PRIMARY KEY on upsert column is mandatory — without it, `INSERT OR REPLACE` cannot dedup
+- `df.to_dict(orient="records")` → list of dicts → directly usable by `conn.execute()`
+- Write to state table AFTER successful load — never pre-mark as done
+- `os.path.basename(filepath)` not `.split("/")[-1]` — portable across OS
+
+📄 [Full notes](daily-notes/day5d_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5d_exercises.py)
 
 ---
 
