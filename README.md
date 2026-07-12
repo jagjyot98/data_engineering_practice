@@ -76,6 +76,14 @@ data-engineering-practice/
 
 ---
 
+## Open Practice Projects Index
+
+| Project | Topic | Dataset | Key Techniques | Status |
+|---------|-------|---------|---------------|--------|
+| [E-Commerce Massive Pipeline](open_massive_practice/op_massive_ecommerce.py) | Incremental ETL on a large, messy real-world dataset | 500K-row synthetic global orders (2022–2025); 3 overlapping daily batch files | Mixed date format parsing, currency/quantity cleaning, intra-batch dedup, incremental load by primary key, validate + quarantine, post-load aggregate | Complete |
+
+---
+
 ## Day-wise Notes Summary
 
 ### Day 1 — Python Basics for Data Engineering
@@ -281,6 +289,60 @@ data-engineering-practice/
 - `os.path.basename(filepath)` not `.split("/")[-1]` — portable across OS
 
 📄 [Full notes](daily-notes/day5d_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5d_exercises.py)
+
+---
+
+## Open Practice Project — E-Commerce Massive Pipeline
+
+An open-ended, self-directed practice project built alongside the daily exercises to apply all Phase 1 ETL concepts on a realistic, large-scale dataset.
+
+### Dataset (`datasets/` — not committed, generated locally)
+
+A synthetic **500,000-row global e-commerce orders dataset** (2022–2025) generated with intentional real-world messiness:
+
+| Messiness | Detail |
+|-----------|--------|
+| ~3% duplicate rows | Same `order_id` re-sent, simulating upstream re-ingestion |
+| Missing values | `customer_email` (~7%), `shipping_country` (~3%), `discount_pct`, `coupon_code` |
+| Mixed date formats | ISO (`2024-01-15`), US (`01/15/2024`), EU (`15-01-2024`) in the same column |
+| Dirty strings | Random ALL CAPS, lowercase, leading/trailing whitespace in names, countries, payment methods |
+| Bad numeric values | ~1% negative unit prices, ~0.5% zero prices (data-entry errors) |
+| Currency formatting | ~10% of `amount` values have stray `$` signs and commas (e.g. `$1,299.99`) |
+| Mixed quantity types | ~5% of `quantity` values stored as strings (e.g. `"5 units"` instead of `5`) |
+
+Three overlapping incremental batch files (`datasets/incremental/`) simulate daily source-system extracts:
+- `orders_day1.csv` — order_ids 1–500 (500 rows, all new)
+- `orders_day2.csv` — order_ids 401–900 (500 rows: 100 re-sent + 400 new)
+- `orders_day3.csv` — order_ids 801–1500 (700 rows: 100 re-sent + 600 new)
+
+### Pipeline (`open_massive_practice/op_massive_ecommerce.py`)
+
+A full production-style incremental ETL pipeline combining all patterns learned across Days 5–5d:
+
+| Stage | What it does |
+|-------|-------------|
+| **Extract** | Reads a daily batch CSV |
+| **Incremental dedup** | `CREATE TABLE IF NOT EXISTS` + `order_id` primary key check — skips already-loaded rows |
+| **Intra-batch dedup** | `drop_duplicates(subset="order_id")` — removes duplicates within the incoming batch itself |
+| **Date parsing** | `parse_mixed_dates()` — tries ISO, US, EU formats in sequence; leaves unparseable dates as `NaT` |
+| **Amount/quantity cleaning** | Strips `$` and commas from `amount`; strips `" units"` suffix from `quantity`; converts both to numeric |
+| **Validate** | Row-level null and range checks on `customer_email`, `shipping_country`, `unit_price`, `amount_clean`, `quantity_clean` |
+| **Transform** | Normalises casing and whitespace across all string columns |
+| **Load** | Valid rows appended to `ecommerce_clean` (incremental); rejected rows to `ecommerce_rejected` |
+| **Aggregate** | Post-load `GROUP BY product_category` revenue query to verify the load |
+
+**Target tables in `ecommerce_orders.db`:**
+- `ecommerce_clean` — validated, transformed orders (incremental, keyed on `order_id`)
+- `ecommerce_rejected` — rows that failed validation with `reject_reason`
+
+**Expected incremental results (correct pipeline):**
+```
+after day1: 500 rows in ecommerce_clean  (500 new,   0 skipped)
+after day2: 900 rows in ecommerce_clean  (400 new, 100 skipped)
+after day3: 1500 rows in ecommerce_clean (600 new, 100 skipped)
+```
+
+> **Note:** `datasets/` is excluded from version control (local generation only). The pipeline code and DB are committed under `open_massive_practice/`.
 
 ---
 
