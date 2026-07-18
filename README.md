@@ -74,34 +74,6 @@ data-engineering-practice/
 | [Day 6](daily-exercises/day6_exercises.py) | psycopg2 — Raw Python to PostgreSQL | connect, cursor, commit/rollback, CREATE TABLE, %s placeholders, single-value tuple, execute, executemany, fetchone/fetchall/fetchmany, DictCursor, UPDATE, DELETE | 9.4/10 |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
-
----
-
-### Day 6 — psycopg2: Raw Python to PostgreSQL
-**Date:** 2026-07-19
-
-**Topics covered:**
-- **psycopg2 vs SQLAlchemy** — psycopg2 is low-level, PostgreSQL-only, full manual control; SQLAlchemy wraps it with higher-level abstractions
-- **Connecting** — `psycopg2.connect(**DB)`, cursor creation, always close cursor and connection
-- **Commit & rollback** — psycopg2 does NOT auto-commit; every DML/DDL needs `conn.commit()`; `conn.rollback()` undoes everything since last commit
-- **DDL** — `CREATE TABLE IF NOT EXISTS` with PostgreSQL types (`SERIAL`, `VARCHAR`, `NUMERIC`, `DATE`)
-- **Parameterised queries** — `%s` placeholder (not `:param`, not f-strings); single-value tuple rule: `(value,)` not `(value)`
-- **INSERT** — `cursor.execute()` for single row, `cursor.executemany()` for batch
-- **SELECT & fetch methods** — `fetchone()`, `fetchall()`, `fetchmany(N)` streaming loop
-- **DictCursor** — `cursor_factory=psycopg2.extras.DictCursor` for column-name access instead of index
-- **UPDATE & DELETE** — `cur.rowcount` to verify rows affected
-- **PostgreSQL return types** — `NUMERIC` → `Decimal`, `DATE` → `datetime.date`
-
-**Key rules learned:**
-- psycopg2 does NOT auto-commit — always call `conn.commit()` after DML/DDL
-- Every transaction ends with EITHER `commit()` OR `rollback()` — never both in sequence
-- `rollback()` closes the transaction — `commit()` after it is a no-op and signals wrong intent
-- `%s` placeholder always requires a tuple or list: `(value,)` for one value — bare string iterates its characters
-- `executemany()` `rowcount` reports the last statement's count, not cumulative
-- Always use `DictCursor` in production — tuple index access breaks when column order changes
-
-📄 [Full notes](daily-notes/day6_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day6_exercises.py)
-
 ---
 
 ## Open Practice Projects Index
@@ -317,6 +289,33 @@ data-engineering-practice/
 - `os.path.basename(filepath)` not `.split("/")[-1]` — portable across OS
 
 📄 [Full notes](daily-notes/day5d_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day5d_exercises.py)
+
+---
+
+### Day 6 — psycopg2: Raw Python to PostgreSQL
+**Date:** 2026-07-19
+
+**Topics covered:**
+- **psycopg2 vs SQLAlchemy** — psycopg2 is low-level, PostgreSQL-only, full manual control; SQLAlchemy wraps it with higher-level abstractions
+- **Connecting** — `psycopg2.connect(**DB)`, cursor creation, always close cursor and connection
+- **Commit & rollback** — psycopg2 does NOT auto-commit; every DML/DDL needs `conn.commit()`; `conn.rollback()` undoes everything since last commit
+- **DDL** — `CREATE TABLE IF NOT EXISTS` with PostgreSQL types (`SERIAL`, `VARCHAR`, `NUMERIC`, `DATE`)
+- **Parameterised queries** — `%s` placeholder (not `:param`, not f-strings); single-value tuple rule: `(value,)` not `(value)`
+- **INSERT** — `cursor.execute()` for single row, `cursor.executemany()` for batch
+- **SELECT & fetch methods** — `fetchone()`, `fetchall()`, `fetchmany(N)` streaming loop
+- **DictCursor** — `cursor_factory=psycopg2.extras.DictCursor` for column-name access instead of index
+- **UPDATE & DELETE** — `cur.rowcount` to verify rows affected
+- **PostgreSQL return types** — `NUMERIC` → `Decimal`, `DATE` → `datetime.date`
+
+**Key rules learned:**
+- psycopg2 does NOT auto-commit — always call `conn.commit()` after DML/DDL
+- Every transaction ends with EITHER `commit()` OR `rollback()` — never both in sequence
+- `rollback()` closes the transaction — `commit()` after it is a no-op and signals wrong intent
+- `%s` placeholder always requires a tuple or list: `(value,)` for one value — bare string iterates its characters
+- `executemany()` `rowcount` reports the last statement's count, not cumulative
+- Always use `DictCursor` in production — tuple index access breaks when column order changes
+
+📄 [Full notes](daily-notes/day6_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day6_exercises.py)
 
 ---
 
