@@ -73,7 +73,6 @@ data-engineering-practice/
 | [Day 5d](daily-exercises/day5d_exercises.py) | ETL Deep Dive — Chunked Loading, Upsert + Audit, Checkpointing | chunksize iterator, mask-once pattern, INSERT OR REPLACE, audit columns (loaded_at/source_file/run_id), uuid, state table, idempotency, os.path.basename | A:9 B:9 C:9 |
 | [Day 6](daily-exercises/day6_exercises.py) | psycopg2 — Raw Python to PostgreSQL | connect, cursor, commit/rollback, CREATE TABLE, %s placeholders, single-value tuple, execute, executemany, fetchone/fetchall/fetchmany, DictCursor, UPDATE, DELETE | 9.4/10 |
 | Day 7 | Mini ETL Project | *(upcoming)* | — |
-| Day 7 | Mini ETL Project | *(upcoming)* | — |
 ---
 
 ## Open Practice Projects Index
