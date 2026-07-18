@@ -1,0 +1,201 @@
+order_id,customer,region,product_category,product_name,quantity,unit_price,order_date
+1,Isla,West,Electronics,Laptop,4,227.27,2024-02-14
+2,Isla,South,Electronics,Laptop,,,2024-08-02
+3,Eve,South,Sports,Cycling Helmet,5,696.75,2024-03-20
+4,Alice,North,Home,Blender,,310.14,2024-08-23
+5,Diana,North,Sports,Yoga Mat,3,241.61,2024-12-26
+6,Eve,East,Electronics,Phone,5,238.62,2024-08-20
+7,James,South,Clothing,Sneakers,1,175.51,2024-11-21
+8,Frank,South,Clothing,Jeans,2,309.77,2024-01-29
+9,Frank,West,Electronics,Tablet,2,221.52,2024-04-18
+10,James,West,Sports,Water Bottle,-1,219.26,2024-08-07
+11,Charlie,West,Home,Vacuum,-1,412.53,2024-12-14
+12,Alice,North,Electronics,Monitor,2,480.75,2024-12-14
+13,Eve,South,Home,Lamp,,,2024-09-13
+14,Isla,North,Electronics,Tablet,5,514.77,2024-09-28
+15,Diana,South,Home,Desk Chair,,98.38,2024-01-30
+16,Charlie,West,Electronics,Laptop,4,393.93,2024-12-03
+17,Diana,West,Clothing,Sneakers,3,699.22,2024-06-08
+18,,South,Home,Desk Chair,3,366.67,2024-10-10
+19,,North,Clothing,Jacket,,569.19,2024-06-18
+20,James,South,Clothing,Sneakers,4,393.48,2024-08-30
+21,Alice,North,Sports,Water Bottle,-1,84.52,2024-12-10
+22,Henry,West,Electronics,Monitor,4,278.05,2024-03-12
+23,Isla,North,Clothing,Sneakers,2,207.35,2024-02-20
+24,Grace,South,Electronics,Laptop,5,680.47,2024-01-31
+25,Isla,West,Sports,Yoga Mat,2,219.51,2024-12-04
+26,Frank,North,Clothing,Jeans,1,181.98,2024-01-30
+27,Diana,North,Sports,Dumbbells,,769.02,2024-07-25
+28,Frank,South,Clothing,Boots,3,41.4,2024-05-13
+29,Bob,West,Home,Vacuum,1,322.67,2024-01-05
+30,Diana,East,Electronics,Laptop,3,178.39,2024-07-08
+31,Isla,East,Clothing,T-Shirt,5,439.14,2024-01-05
+32,James,East,Electronics,Phone,1,101.19,2024-04-17
+33,Grace,North,Clothing,Sneakers,3,395.94,2024-05-21
+34,Grace,North,Electronics,Tablet,5,113.35,2024-10-14
+35,Charlie,South,Electronics,Laptop,4,724.1,2024-08-08
+36,Diana,South,Electronics,Tablet,1,720.2,2024-12-15
+37,Diana,South,Electronics,Tablet,5,452.31,2024-03-24
+38,Diana,South,Sports,Yoga Mat,-1,591.89,2024-05-16
+39,Frank,South,Electronics,Monitor,5,40.59,2024-06-05
+40,Eve,West,Clothing,Jacket,4,162.57,2024-06-28
+41,Alice,West,Home,Blender,,702.86,2024-02-25
+42,Eve,West,Home,Lamp,2,488.9,2024-01-23
+43,Frank,North,Electronics,Headphones,5,435.38,2024-08-08
+44,Grace,West,Home,Cookware,1,534.08,2024-06-16
+45,Charlie,East,Home,Cookware,-1,161.55,2024-11-11
+46,Henry,West,Sports,Yoga Mat,1,236.66,2024-08-14
+47,Eve,East,Clothing,Boots,2,637.05,2024-09-20
+48,,North,Electronics,Phone,4,255.23,2024-08-31
+49,Charlie,North,Sports,Water Bottle,4,464.78,2024-12-01
+50,,North,Electronics,Monitor,-1,148.95,2024-05-07
+51,Henry,West,Sports,Dumbbells,5,377.07,2024-11-09
+52,Eve,West,Sports,Dumbbells,4,690.58,2024-09-23
+53,Isla,South,Clothing,Sneakers,2,71.21,2024-02-11
+54,Isla,West,Clothing,Jeans,2,558.22,2024-08-26
+55,James,West,Electronics,Phone,5,341.91,2024-07-13
+56,Isla,South,Electronics,Tablet,1,605.25,2024-11-04
+57,Grace,West,Sports,Dumbbells,1,-354.31,2024-03-25
+58,,West,Clothing,Boots,3,31.3,2024-11-25
+59,Grace,West,Clothing,T-Shirt,-1,49.72,2024-05-22
+60,Bob,North,Home,Blender,2,25.31,2024-11-29
+61,Bob,South,Electronics,Phone,-1,672.99,2024-10-15
+62,Charlie,North,Sports,Cycling Helmet,5,301.43,2024-06-08
+63,Bob,South,Electronics,Tablet,3,545.1,2024-10-30
+64,Alice,West,Electronics,Tablet,5,550.56,2024-06-26
+65,Grace,West,Home,Blender,3,-521.56,2024-07-04
+66,Isla,West,Clothing,T-Shirt,-1,589.7,2024-09-04
+67,Diana,West,Sports,Cycling Helmet,1,682.85,2024-08-25
+68,Frank,East,Home,Blender,2,682.25,2024-05-23
+69,Henry,West,Electronics,Headphones,-1,77.63,2024-11-26
+70,Frank,East,Sports,Yoga Mat,,242.45,2024-08-30
+71,Diana,North,Sports,Cycling Helmet,1,565.26,2024-06-10
+72,James,North,Clothing,Jeans,-1,593.5,2024-05-24
+73,Alice,East,Clothing,Sneakers,-1,295.1,2024-01-28
+74,Charlie,East,Clothing,T-Shirt,,699.45,2024-01-27
+75,Charlie,East,Sports,Yoga Mat,5,61.62,2024-03-17
+76,Isla,West,Electronics,Phone,,450.88,2024-07-13
+77,Bob,South,Sports,Cycling Helmet,5,474.93,2024-04-16
+78,James,East,Home,Blender,-1,199.49,2024-08-28
+79,Eve,South,Electronics,Phone,1,568.5,2024-11-16
+80,Alice,East,Sports,Yoga Mat,3,187.6,2024-03-25
+81,Isla,West,Home,Desk Chair,,380.27,2024-09-09
+82,,North,Electronics,Headphones,,712.64,2024-04-27
+83,Eve,West,Home,Cookware,,612.86,2024-04-02
+84,Frank,West,Sports,Yoga Mat,2,284.89,2024-07-29
+85,Bob,North,Home,Desk Chair,5,-610.79,2024-07-25
+86,Alice,East,Sports,Water Bottle,,158.19,2024-04-14
+87,Diana,South,Clothing,Sneakers,2,,2024-12-29
+88,Henry,South,Home,Cookware,,446.28,2024-03-01
+89,Henry,South,Sports,Cycling Helmet,3,567.28,2024-10-09
+90,Grace,East,Sports,Dumbbells,3,411.51,2024-06-23
+91,Charlie,West,Electronics,Tablet,4,245.86,2024-08-16
+92,Diana,West,Home,Lamp,3,612.67,2024-10-19
+93,Charlie,North,Clothing,T-Shirt,,261.36,2024-09-10
+94,Henry,South,Clothing,Boots,3,272.28,2024-01-08
+95,Bob,West,Sports,Dumbbells,,380.9,2024-06-17
+96,Eve,North,Home,Desk Chair,5,437.4,2024-04-26
+97,Alice,East,Sports,Yoga Mat,5,510.66,2024-01-24
+98,Charlie,South,Electronics,Tablet,1,306.12,2024-03-28
+99,Diana,East,Electronics,Headphones,5,312.21,2024-08-24
+100,Charlie,West,Sports,Cycling Helmet,4,17.42,2024-02-07
+101,Diana,West,Home,Cookware,1,514.76,2024-07-15
+102,Grace,North,Electronics,Phone,2,461.82,2024-05-20
+103,James,South,Electronics,Headphones,4,402.41,2024-06-29
+104,Bob,North,Clothing,Boots,1,545.43,2024-11-17
+105,Grace,South,Home,Desk Chair,,467.86,2024-03-30
+106,Henry,East,Clothing,Boots,1,429.37,2024-05-31
+107,Grace,East,Electronics,Monitor,,121.2,2024-10-12
+108,Eve,West,Electronics,Monitor,,218.92,2024-10-26
+109,James,North,Home,Blender,4,-194.72,2024-04-23
+110,Henry,North,Sports,Cycling Helmet,4,332.55,2024-02-29
+111,Isla,South,Clothing,Boots,-1,317.03,2024-08-02
+112,,South,Sports,Yoga Mat,5,396.58,2024-07-08
+113,Frank,West,Sports,Water Bottle,-1,685.81,2024-02-01
+114,James,North,Home,Vacuum,,759.72,2024-01-11
+115,James,South,Home,Vacuum,-1,631.71,2024-04-20
+116,Charlie,East,Home,Vacuum,5,-721.42,2024-10-03
+117,James,North,Clothing,Jacket,4,694.49,2024-06-14
+118,Henry,North,Clothing,Sneakers,,110.14,2024-07-04
+119,Henry,North,Sports,Dumbbells,3,44.26,2024-11-25
+120,Bob,East,Electronics,Monitor,5,327.28,2024-02-11
+121,James,East,Clothing,Jacket,-1,227.26,2024-09-28
+122,Isla,West,Sports,Water Bottle,,636.55,2024-04-20
+123,Grace,East,Sports,Dumbbells,2,277.76,2024-06-09
+124,Bob,South,Home,Vacuum,4,739.16,2024-07-09
+125,Grace,East,Electronics,Headphones,3,453.73,2024-01-27
+126,Bob,East,Home,Lamp,,466.56,2024-06-28
+127,James,North,Electronics,Tablet,3,188.67,2024-11-10
+128,Charlie,West,Home,Blender,-1,225.88,2024-03-14
+129,Grace,East,Electronics,Phone,4,-510.21,2024-08-20
+130,Alice,South,Clothing,Sneakers,1,580.06,2024-03-20
+131,Diana,North,Electronics,Laptop,1,360.06,2024-09-19
+132,Alice,West,Home,Desk Chair,,233.76,2024-04-22
+133,Frank,North,Electronics,Laptop,-1,248.12,2024-03-02
+134,Frank,West,Sports,Water Bottle,-1,112.06,2024-02-06
+135,Grace,West,Electronics,Monitor,,373.21,2024-12-29
+136,Frank,West,Home,Blender,2,26.48,2024-02-15
+137,Frank,East,Electronics,Phone,2,475.21,2024-04-23
+138,Frank,South,Clothing,Jacket,3,510.25,2024-11-26
+139,Bob,West,Clothing,Jacket,-1,212.21,2024-03-31
+140,Frank,West,Sports,Water Bottle,4,740.08,2024-03-18
+141,Bob,West,Electronics,Monitor,2,508.79,2024-06-07
+142,Bob,West,Sports,Yoga Mat,,301.3,2024-11-10
+143,Isla,North,Sports,Yoga Mat,2,728.15,2024-03-18
+144,Charlie,South,Sports,Yoga Mat,5,720.31,2024-01-21
+145,Grace,North,Sports,Water Bottle,3,422.97,2024-06-22
+146,James,East,Home,Blender,1,84.66,2024-03-17
+147,Grace,North,Electronics,Headphones,4,121.73,2024-03-07
+148,Isla,West,Home,Cookware,2,518.36,2024-02-17
+149,Diana,South,Home,Blender,1,254.0,2024-04-25
+150,Isla,East,Clothing,Jacket,1,677.1,2024-01-20
+151,Charlie,North,Clothing,Boots,2,131.86,2024-08-12
+152,Henry,South,Sports,Cycling Helmet,4,578.47,2024-04-29
+153,Eve,West,Home,Desk Chair,5,163.27,2024-07-14
+154,Frank,North,Clothing,Jeans,5,487.68,2024-10-10
+155,Grace,South,Electronics,Tablet,,612.86,2024-02-16
+156,Bob,South,Sports,Cycling Helmet,,337.77,2024-07-10
+157,Eve,South,Electronics,Tablet,,672.95,2024-08-29
+158,Isla,West,Sports,Water Bottle,3,14.15,2024-11-07
+159,Henry,North,Electronics,Tablet,-1,-247.91,2024-02-02
+160,James,South,Sports,Yoga Mat,4,417.15,2024-06-29
+161,Isla,North,Sports,Dumbbells,4,537.89,2024-09-16
+162,,East,Sports,Water Bottle,,512.18,2024-02-04
+163,Frank,South,Clothing,Jacket,5,469.7,2024-11-25
+164,Alice,South,Sports,Water Bottle,4,154.0,2024-05-30
+165,Henry,North,Electronics,Phone,,259.32,2024-05-09
+166,Frank,West,Clothing,Sneakers,1,-691.09,2024-08-11
+167,Isla,North,Sports,Water Bottle,1,779.24,2024-05-16
+168,Bob,East,Sports,Yoga Mat,2,485.94,2024-06-16
+169,Frank,West,Home,Desk Chair,3,576.95,2024-11-10
+170,Charlie,South,Home,Blender,,540.24,2024-01-16
+171,James,South,Sports,Yoga Mat,-1,63.11,2024-01-17
+172,Frank,East,Sports,Cycling Helmet,1,360.71,2024-11-28
+173,Eve,West,Clothing,Jacket,,591.18,2024-05-13
+174,Bob,South,Clothing,Boots,1,558.24,2024-08-19
+175,Bob,East,Sports,Yoga Mat,5,548.72,2024-10-08
+176,Diana,South,Home,Vacuum,4,570.56,2024-03-03
+177,Isla,North,Clothing,Jeans,5,400.28,2024-03-07
+178,James,South,Electronics,Tablet,2,799.68,2024-02-07
+179,Isla,South,Home,Blender,2,378.01,2024-11-23
+180,Charlie,East,Clothing,T-Shirt,3,729.46,2024-03-23
+181,Isla,South,Clothing,Sneakers,3,716.99,2024-05-20
+182,Charlie,East,Home,Cookware,3,83.81,2024-12-03
+183,James,North,Electronics,Laptop,,45.91,2024-08-01
+184,Eve,North,Sports,Cycling Helmet,4,765.75,2024-08-20
+185,Frank,West,Electronics,Phone,2,338.34,2024-06-25
+186,Diana,North,Clothing,Sneakers,3,453.7,2024-03-13
+187,Frank,East,Electronics,Tablet,2,692.69,2024-10-22
+188,Bob,West,Clothing,Jeans,2,796.82,2024-07-20
+189,Henry,North,Clothing,Jeans,3,288.79,2024-05-26
+190,Grace,South,Electronics,Monitor,-1,707.14,2024-01-27
+191,James,North,Home,Cookware,1,68.09,2024-12-14
+192,Charlie,West,Clothing,Jacket,2,304.83,2024-04-11
+193,James,South,Electronics,Laptop,,118.26,2024-09-20
+194,Frank,West,Home,Cookware,1,138.38,2024-09-16
+195,Eve,North,Home,Desk Chair,5,23.14,2024-12-18
+196,James,South,Sports,Cycling Helmet,4,628.49,2024-09-02
+197,Alice,East,Sports,Dumbbells,5,-547.77,2024-08-13
+198,Alice,South,Sports,Dumbbells,2,555.5,2024-12-27
+199,Henry,East,Clothing,Boots,1,798.52,2024-09-29
+200,Eve,South,Home,Lamp,3,392.5,2024-05-27

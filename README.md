@@ -72,7 +72,8 @@ data-engineering-practice/
 | [Day 5c](daily-exercises/day5c_exercises.py) | SQLAlchemy — Pipeline Deep Practice (3 Pipelines) | Vectorised ops vs .apply(), dt.strftime, engine as param, left vs inner join for enrichment, incremental load with CREATE TABLE IF NOT EXISTS + isin dedup | A:8.5 B:9 C:8 |
 | [Day 5d](daily-exercises/day5d_exercises.py) | ETL Deep Dive — Chunked Loading, Upsert + Audit, Checkpointing | chunksize iterator, mask-once pattern, INSERT OR REPLACE, audit columns (loaded_at/source_file/run_id), uuid, state table, idempotency, os.path.basename | A:9 B:9 C:9 |
 | [Day 6](daily-exercises/day6_exercises.py) | psycopg2 — Raw Python to PostgreSQL | connect, cursor, commit/rollback, CREATE TABLE, %s placeholders, single-value tuple, execute, executemany, fetchone/fetchall/fetchmany, DictCursor, UPDATE, DELETE | 9.4/10 |
-| Day 7 | Mini ETL Project | *(upcoming)* | — |
+| [Day 7](daily-exercises/day7_exercises.py) | Mini ETL Project — pandas + psycopg2 + PostgreSQL | extract/validate/transform/load pipeline, execute_values bulk insert, NaN→None conversion, ON CONFLICT idempotency, two-table pattern (clean + rejected), aggregate reporting queries | 8/10 |
+
 ---
 
 ## Open Practice Projects Index
@@ -315,6 +316,30 @@ data-engineering-practice/
 - Always use `DictCursor` in production — tuple index access breaks when column order changes
 
 📄 [Full notes](daily-notes/day6_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day6_exercises.py)
+
+---
+
+### Day 7 — Mini ETL Project: pandas + psycopg2 + PostgreSQL
+**Date:** 2026-07-19
+
+**Topics covered:**
+- **Pipeline architecture** — extract → validate → transform → load (clean) → load (rejected) → aggregate → result dict
+- **Two-table pattern** — `sales_clean` for valid rows, `sales_rejected` for quarantined invalid rows
+- **execute_values** — standalone bulk insert from `psycopg2.extras`; builds one large `INSERT ... VALUES (r1),(r2),...`; much faster than `executemany`
+- **Column order alignment** — `df[cols].itertuples()` must list columns in the exact same order as the INSERT statement
+- **NaN → None conversion** — `df[cols].astype(object).where(pd.notna(df[cols]), other=None)`; `astype(object)` required to prevent numpy reverting `None` to `NaN` through `itertuples`
+- **ON CONFLICT DO NOTHING** — idempotent re-runs; duplicate `order_id`s silently skipped
+- **Table definition before INSERT** — `CREATE TABLE IF NOT EXISTS` must run first; psycopg2 has no ORM, no auto-create
+- **Derived columns in transform** — `total_price = quantity * unit_price`; `loaded_at` audit timestamp added in Python
+
+**Key rules learned:**
+- `execute_values(cur, sql, data)` — standalone function, not `cur.execute_values()`
+- `astype(object)` before `where(..., None)` — without it, `itertuples` reads from numpy float64 and converts `None` back to `NaN`
+- `ON CONFLICT (pk) DO NOTHING` on both tables — always make pipelines safe to re-run
+- Always close `cur` and `conn` in every function — even query-only functions leak connections otherwise
+- `~mask` is bitwise NOT on a boolean Series — flips valid rows to get the invalid set
+
+📄 [Full notes](daily-notes/day7_notes.py) | 📝 [Exercise & evaluation](daily-exercises/day7_exercises.py)
 
 ---
 
